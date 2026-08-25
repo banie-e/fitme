@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAppState } from "@/lib/app-state";
+import { trackEvent } from "@/lib/analytics";
 import { PreferenceSelector } from "@/components/preference-selector";
 import { LoadingState } from "@/components/loading-state";
 import { getSituationLabel, getStyleLabel } from "@/lib/data";
@@ -88,7 +89,10 @@ export default function MyPage() {
 
       <button
         type="button"
-        onClick={() => setEditing(true)}
+        onClick={() => {
+          trackEvent("Edit Preferences Clicked");
+          setEditing(true);
+        }}
         className="w-full rounded-full border border-border py-3 text-sm font-semibold text-foreground hover:border-primary hover:text-primary"
       >
         취향 다시 설정하기

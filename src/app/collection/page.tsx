@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useAppState } from "@/lib/app-state";
+import { trackEvent } from "@/lib/analytics";
 import { OUTFITS, SITUATIONS, STYLES } from "@/lib/data";
 import { TagChip } from "@/components/tag-chip";
 import { OutfitCard } from "@/components/outfit-card";
@@ -48,6 +49,7 @@ export default function CollectionPage() {
         </p>
         <Link
           href="/explore"
+          onClick={() => trackEvent("Explore More Clicked", { from: "collection_empty" })}
           className="mt-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-white hover:opacity-90"
         >
           코디 탐색하러 가기

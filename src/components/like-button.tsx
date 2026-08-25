@@ -1,6 +1,7 @@
 "use client";
 
 import { useAppState } from "@/lib/app-state";
+import { trackEvent } from "@/lib/analytics";
 
 export function LikeButton({
   outfitId,
@@ -21,6 +22,10 @@ export function LikeButton({
       onClick={(event) => {
         event.preventDefault();
         event.stopPropagation();
+        trackEvent("Like Button Clicked", {
+          outfit_id: outfitId,
+          liked: !liked,
+        });
         toggleLike(outfitId);
       }}
       className={`flex ${dimension} shrink-0 items-center justify-center rounded-full border bg-surface/90 transition-colors ${

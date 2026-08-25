@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { trackEvent } from "@/lib/analytics";
 
 const NAV_ITEMS = [
   { href: "/", label: "홈", icon: "⌂" },
@@ -23,6 +24,9 @@ export function BottomNav() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={() =>
+                trackEvent("Bottom Nav Clicked", { label: item.label, href: item.href })
+              }
               className={`flex flex-col items-center gap-1 py-3 text-xs font-medium transition-colors ${
                 active ? "text-primary" : "text-muted"
               }`}

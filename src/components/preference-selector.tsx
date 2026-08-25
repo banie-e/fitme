@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { OUTFITS, SITUATIONS, STYLES } from "@/lib/data";
+import { trackEvent } from "@/lib/analytics";
 import { TagChip } from "./tag-chip";
 import { OutfitCard } from "./outfit-card";
 
@@ -103,7 +104,14 @@ export function PreferenceSelector({
           )}
           <button
             type="button"
-            onClick={() => onSubmit([situation], [style])}
+            onClick={() => {
+              trackEvent("Preference Submit Clicked", {
+                situation,
+                style,
+                label: submitLabel,
+              });
+              onSubmit([situation], [style]);
+            }}
             className="w-full rounded-full bg-primary py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
           >
             {submitLabel}

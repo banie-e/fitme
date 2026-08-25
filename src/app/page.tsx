@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useAppState } from "@/lib/app-state";
+import { trackEvent } from "@/lib/analytics";
 import { OUTFITS, SITUATIONS, getSituationLabel, getStyleLabel, matchScore } from "@/lib/data";
 import { OutfitCard } from "@/components/outfit-card";
 import { LoadingState } from "@/components/loading-state";
@@ -30,6 +31,7 @@ export default function HomePage() {
         </div>
         <Link
           href="/onboarding"
+          onClick={() => trackEvent("Start Onboarding Clicked")}
           className="w-full rounded-full bg-primary py-3.5 text-center text-sm font-semibold text-white transition-opacity hover:opacity-90"
         >
           취향 설정 시작하기
@@ -100,6 +102,7 @@ export default function HomePage() {
 
       <Link
         href="/explore"
+        onClick={() => trackEvent("Explore More Clicked", { from: "home" })}
         className="w-full rounded-full border border-border py-3 text-center text-sm font-semibold text-foreground hover:border-primary hover:text-primary"
       >
         더 많은 코디 탐색하기
