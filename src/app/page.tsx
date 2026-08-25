@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useAppState } from "@/lib/app-state";
 import { trackEvent } from "@/lib/analytics";
-import { OUTFITS, SITUATIONS, getSituationLabel, getStyleLabel, matchScore } from "@/lib/data";
+import { OUTFITS, getSituationLabel, getStyleLabel, matchScore } from "@/lib/data";
 import { OutfitCard } from "@/components/outfit-card";
 import { LoadingState } from "@/components/loading-state";
 
@@ -36,21 +36,6 @@ export default function HomePage() {
         >
           취향 설정 시작하기
         </Link>
-        <div className="grid grid-cols-2 gap-3">
-          {SITUATIONS.slice(0, 4).map((situation) => (
-            <div
-              key={situation.id}
-              className="rounded-2xl border border-border bg-surface p-4"
-            >
-              <p className="text-sm font-semibold text-foreground">
-                {situation.label}
-              </p>
-              <p className="mt-1 text-xs leading-relaxed text-muted">
-                {situation.description}
-              </p>
-            </div>
-          ))}
-        </div>
       </div>
     );
   }

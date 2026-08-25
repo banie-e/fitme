@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Heart, House, Menu, Search } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 
 const NAV_ITEMS = [
-  { href: "/", label: "홈", icon: "⌂" },
-  { href: "/explore", label: "탐색", icon: "⌕" },
-  { href: "/collection", label: "찜", icon: "♥" },
-  { href: "/mypage", label: "MY", icon: "☰" },
+  { href: "/", label: "홈", Icon: House },
+  { href: "/explore", label: "탐색", Icon: Search },
+  { href: "/collection", label: "찜", Icon: Heart },
+  { href: "/mypage", label: "MY", Icon: Menu },
 ];
 
 export function BottomNav() {
@@ -31,7 +32,7 @@ export function BottomNav() {
                 active ? "text-primary" : "text-muted"
               }`}
             >
-              <span className="text-base leading-none">{item.icon}</span>
+              <item.Icon className="h-7 w-7" strokeWidth={1.75} />
               {item.label}
             </Link>
           );
