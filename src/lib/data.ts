@@ -39,8 +39,10 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "work_minimal_1",
     title: "크림 니트 블랙 슬랙스룩",
+    primaryOccasion: "work",
+    primaryStyle: "minimal",
     occasions: ["work", "date"],
-    styles: ["minimal", "chic", "classic"],
+    styles: ["minimal", "classic"],
     description: "화이트 셔츠와 블랙 슬랙스로 완성한 군더더기 없는 출근룩.",
     items: {
       top: "크림 반팔 니트",
@@ -52,6 +54,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "work_minimal_2",
     title: "그레이 셔츠 슬랙스룩",
+    primaryOccasion: "work",
+    primaryStyle: "minimal",
     occasions: ["work"],
     styles: ["minimal", "classic"],
     description: "라이트 그레이 셔츠와 블랙 팬츠로 차분하게 정돈한 출근룩.",
@@ -65,6 +69,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "work_casual_1",
     title: "블루 셔츠 치노룩",
+    primaryOccasion: "work",
+    primaryStyle: "casual",
     occasions: ["work", "weekend", "travel"],
     styles: ["casual", "classic"],
     description: "톤온톤 그레이 세트업으로 편안하면서 정돈된 인상을 주는 코디.",
@@ -78,6 +84,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "work_casual_2",
     title: "크림 가디건 데님룩",
+    primaryOccasion: "work",
+    primaryStyle: "casual",
     occasions: ["work", "date", "weekend"],
     styles: ["casual", "classic"],
     description: "라이트 니트 가디건과 데님 팬츠로 편안하게 완성한 출근룩.",
@@ -91,6 +99,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "work_feminine_1",
     title: "핑크 셔츠 스커트룩",
+    primaryOccasion: "work",
+    primaryStyle: "feminine",
     occasions: ["work", "date"],
     styles: ["feminine", "classic"],
     description: "베이지 톤 니트와 플리츠 스커트로 부드럽게 완성한 출근룩.",
@@ -104,6 +114,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "work_feminine_2",
     title: "리본 블라우스 스커트룩",
+    primaryOccasion: "work",
+    primaryStyle: "feminine",
     occasions: ["work", "date"],
     styles: ["feminine", "classic"],
     description: "프릴 블라우스와 H라인 스커트로 여성스럽게 완성한 출근룩.",
@@ -117,6 +129,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "date_minimal_1",
     title: "아이보리 모노톤 룩",
+    primaryOccasion: "date",
+    primaryStyle: "minimal",
     occasions: ["date", "weekend"],
     styles: ["minimal", "classic"],
     description: "블랙 슬립 드레스에 자켓을 더해 세련되게 완성한 코디.",
@@ -130,6 +144,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "date_minimal_2",
     title: "블랙 앤 크림 미니멀룩",
+    primaryOccasion: "date",
+    primaryStyle: "minimal",
     occasions: ["date", "weekend"],
     styles: ["minimal", "chic"],
     description: "화이트 셔츠와 블랙 슬랙스로 깔끔하게 연출한 데이트룩.",
@@ -143,6 +159,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "date_casual_1",
     title: "네이비 레이어드 캐주얼",
+    primaryOccasion: "date",
+    primaryStyle: "casual",
     occasions: ["date", "weekend", "travel"],
     styles: ["casual", "minimal"],
     description: "가볍게 걸치는 데님 원피스로 편안한 분위기를 살린 데이트룩.",
@@ -156,6 +174,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "date_casual_2",
     title: "핑크 셔츠 데님룩",
+    primaryOccasion: "date",
+    primaryStyle: "casual",
     occasions: ["date", "weekend", "travel"],
     styles: ["casual", "feminine"],
     description: "크롭 니트와 청바지로 편안하면서 산뜻하게 완성한 데이트룩.",
@@ -169,7 +189,9 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "date_feminine_1",
     title: "플로럴 원피스 데이트룩",
-    occasions: ["date", "weekend", "travel"],
+    primaryOccasion: "date",
+    primaryStyle: "feminine",
+    occasions: ["date", "weekend"],
     styles: ["feminine", "classic"],
     description: "부드러운 실루엣의 화이트 원피스로 설레는 분위기를 연출.",
     items: {
@@ -180,6 +202,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "date_feminine_2",
     title: "블랙 원피스 데이트룩",
+    primaryOccasion: "date",
+    primaryStyle: "feminine",
     occasions: ["date", "weekend"],
     styles: ["feminine", "chic"],
     description: "은은한 플로럴 원피스로 로맨틱한 무드를 더한 데이트룩.",
@@ -192,7 +216,9 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "weekend_minimal_1",
     title: "화이트 셔츠 데님룩",
-    occasions: ["date", "weekend", "travel"],
+    primaryOccasion: "weekend",
+    primaryStyle: "minimal",
+    occasions: ["weekend", "date"],
     styles: ["minimal", "casual"],
     description: "화이트 셔츠 하나로 완성하는 깔끔한 데일리룩.",
     items: {
@@ -205,7 +231,9 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "weekend_minimal_2",
     title: "블랙 셔츠 모노톤룩",
-    occasions: ["date", "weekend"],
+    primaryOccasion: "weekend",
+    primaryStyle: "minimal",
+    occasions: ["weekend", "date"],
     styles: ["minimal", "chic"],
     description: "올블랙 톤으로 어디서나 무난하게 소화하는 데일리룩.",
     items: {
@@ -218,6 +246,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "weekend_casual_1",
     title: "스트라이프 하프팬츠룩",
+    primaryOccasion: "weekend",
+    primaryStyle: "casual",
     occasions: ["weekend", "travel"],
     styles: ["casual"],
     description: "베이직 맨투맨과 청바지로 완성한 부담 없는 데일리룩.",
@@ -231,8 +261,10 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "weekend_casual_2",
     title: "그래픽 티 카고룩",
+    primaryOccasion: "weekend",
+    primaryStyle: "casual",
     occasions: ["weekend", "travel"],
-    styles: ["casual", "chic"],
+    styles: ["casual"],
     description: "후드 집업과 조거 팬츠로 활동적이고 편안하게 완성한 데일리룩.",
     items: {
       top: "화이트 그래픽 반팔 티셔츠",
@@ -244,8 +276,10 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "weekend_feminine_1",
     title: "크림 가디건 스커트룩",
-    occasions: ["date", "weekend", "travel"],
-    styles: ["feminine", "classic"],
+    primaryOccasion: "weekend",
+    primaryStyle: "feminine",
+    occasions: ["weekend", "date"],
+    styles: ["feminine", "casual"],
     description: "포근한 리브 니트와 롱스커트로 부드럽게 완성한 데일리룩.",
     items: {
       top: "크림 반팔 가디건",
@@ -257,7 +291,9 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "weekend_feminine_2",
     title: "로즈 가디건 스커트룩",
-    occasions: ["date", "weekend"],
+    primaryOccasion: "weekend",
+    primaryStyle: "feminine",
+    occasions: ["weekend", "date"],
     styles: ["feminine"],
     description: "가벼운 슬립 드레스에 가디건을 더해 편안하게 완성한 데일리룩.",
     items: {
@@ -270,6 +306,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "travel_casual_1",
     title: "라이트 아우터 데님 여행룩",
+    primaryOccasion: "travel",
+    primaryStyle: "casual",
     occasions: ["travel", "weekend"],
     styles: ["casual", "minimal"],
     items: {
@@ -282,7 +320,9 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "travel_feminine_1",
     title: "세이지 스커트 여행룩",
-    occasions: ["travel", "weekend", "date"],
+    primaryOccasion: "travel",
+    primaryStyle: "feminine",
+    occasions: ["travel", "weekend"],
     styles: ["feminine", "casual"],
     items: {
       top: "아이보리 반팔 셔츠",
@@ -294,7 +334,9 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "travel_chic_1",
     title: "블랙 앤 브라운 시크 여행룩",
-    occasions: ["travel", "date", "weekend"],
+    primaryOccasion: "travel",
+    primaryStyle: "chic",
+    occasions: ["travel", "date"],
     styles: ["chic", "minimal"],
     items: {
       top: "블랙 반팔 니트",
@@ -306,6 +348,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "travel_classic_1",
     title: "블루 셔츠 클래식 여행룩",
+    primaryOccasion: "travel",
+    primaryStyle: "classic",
     occasions: ["travel", "work"],
     styles: ["classic", "minimal"],
     items: {
@@ -319,7 +363,9 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "chic_1",
     title: "버건디 시크 슬랙스룩",
-    occasions: ["work", "date", "travel"],
+    primaryOccasion: "work",
+    primaryStyle: "chic",
+    occasions: ["work", "date"],
     styles: ["chic", "classic"],
     items: {
       top: "버건디 카라 가디건",
@@ -331,6 +377,8 @@ const OUTFIT_DATA: OutfitData[] = [
   {
     id: "classic_1",
     title: "아이보리 셔츠 네이비 스커트룩",
+    primaryOccasion: "work",
+    primaryStyle: "classic",
     occasions: ["work", "date"],
     styles: ["classic", "feminine"],
     items: {
@@ -408,26 +456,43 @@ function rankBySimilarity<T extends string>(
 const MIN_RESULTS = 2;
 
 /**
- * Priority: 1) occasion+style exact match, 2) occasion match + closest style
- * (by tag co-occurrence), 3) style match + closest occasion. Never returns an
- * outfit that matches neither the requested occasion nor style.
+ * Priority: 1) primary occasion+style match (the outfit this combo was shot
+ * for), 2) secondary occasion+style tag match, 3) occasion match + closest
+ * style (by tag co-occurrence), 4) style match + closest occasion. Never
+ * returns an outfit that matches neither the requested occasion nor style,
+ * and never returns the same outfit twice.
  */
 export function matchOutfits(occasion: Occasion, style: Style): Outfit[] {
-  const exact = OUTFITS.filter(
-    (outfit) => outfit.occasions.includes(occasion) && outfit.styles.includes(style)
-  );
-  const results = [...exact];
-  const seen = new Set(results.map((o) => o.id));
+  const results: Outfit[] = [];
+  const seen = new Set<string>();
+
+  function add(outfit: Outfit) {
+    if (seen.has(outfit.id)) return;
+    seen.add(outfit.id);
+    results.push(outfit);
+  }
+
+  for (const outfit of OUTFITS) {
+    if (outfit.primaryOccasion === occasion && outfit.primaryStyle === style) {
+      add(outfit);
+    }
+  }
+
+  if (results.length < MIN_RESULTS) {
+    for (const outfit of OUTFITS) {
+      if (outfit.occasions.includes(occasion) && outfit.styles.includes(style)) {
+        add(outfit);
+      }
+    }
+  }
 
   if (results.length < MIN_RESULTS) {
     for (const similarStyle of rankBySimilarity(STYLE_SIMILARITY, style, STYLE_IDS)) {
       if (results.length >= MIN_RESULTS) break;
       for (const outfit of OUTFITS) {
         if (results.length >= MIN_RESULTS) break;
-        if (seen.has(outfit.id)) continue;
         if (outfit.occasions.includes(occasion) && outfit.styles.includes(similarStyle)) {
-          results.push(outfit);
-          seen.add(outfit.id);
+          add(outfit);
         }
       }
     }
@@ -438,10 +503,8 @@ export function matchOutfits(occasion: Occasion, style: Style): Outfit[] {
       if (results.length >= MIN_RESULTS) break;
       for (const outfit of OUTFITS) {
         if (results.length >= MIN_RESULTS) break;
-        if (seen.has(outfit.id)) continue;
         if (outfit.styles.includes(style) && outfit.occasions.includes(similarOccasion)) {
-          results.push(outfit);
-          seen.add(outfit.id);
+          add(outfit);
         }
       }
     }
@@ -452,14 +515,22 @@ export function matchOutfits(occasion: Occasion, style: Style): Outfit[] {
 
 // --- Style-select screen preview images (occasion -> style -> outfit) ---
 //
+// This is a separate, explicit mapping from matchOutfits() (the recommendation
+// results): each of the 5 style cards under a chosen occasion is filled from
+// this table, never from a live filter, so the 5 images are guaranteed
+// distinct within an occasion.
+//
 // One outfit can legitimately carry several style tags (e.g. an outfit
-// tagged both "chic" and "classic"), so naively taking matchOutfits()[0] per
-// style can hand the same outfit to multiple style cards in the same
+// tagged both "chic" and "classic"), so naively taking the first tag match
+// per style can hand the same outfit to multiple style cards in the same
 // occasion. buildStylePreviewMap() assigns each of the 5 styles a distinct
 // outfit per occasion by walking styles in a fixed order and, for each,
 // picking its best-matching outfit that no earlier style in that occasion
-// has already claimed.
+// has already claimed — preferring the outfit whose primaryOccasion/
+// primaryStyle *is* this exact cell, so every outfit's dedicated combo
+// (including all 6 newly added photos) surfaces on its own card.
 function candidateOutfitsFor(occasion: Occasion, style: Style): Outfit[] {
+  const primaryMatch: Outfit[] = [];
   const exact: Outfit[] = [];
   const styleOnly: Outfit[] = [];
   const occasionOnly: Outfit[] = [];
@@ -467,12 +538,14 @@ function candidateOutfitsFor(occasion: Occasion, style: Style): Outfit[] {
   for (const outfit of OUTFITS) {
     const hasOccasion = outfit.occasions.includes(occasion);
     const hasStyle = outfit.styles.includes(style);
-    if (hasOccasion && hasStyle) exact.push(outfit);
+    if (outfit.primaryOccasion === occasion && outfit.primaryStyle === style) {
+      primaryMatch.push(outfit);
+    } else if (hasOccasion && hasStyle) exact.push(outfit);
     else if (hasStyle) styleOnly.push(outfit);
     else if (hasOccasion) occasionOnly.push(outfit);
     else rest.push(outfit);
   }
-  return [...exact, ...styleOnly, ...occasionOnly, ...rest];
+  return [...primaryMatch, ...exact, ...styleOnly, ...occasionOnly, ...rest];
 }
 
 function buildStylePreviewMap(): Record<Occasion, Record<Style, Outfit>> {

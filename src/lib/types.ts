@@ -26,6 +26,10 @@ export type OutfitItems = {
 export type Outfit = {
   id: string;
   title: string;
+  /** The occasion/style this outfit's photo most represents. */
+  primaryOccasion: Occasion;
+  primaryStyle: Style;
+  /** Reusable tags, always including the primary — max ~2-3 occasions, ~2 styles. */
   occasions: Occasion[];
   styles: Style[];
   description?: string;

@@ -3,11 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   OCCASIONS,
-  OUTFITS,
   STYLES,
   getOccasionLabel,
   getStylePreviewImage,
   getStyleLabel,
+  matchOutfits,
 } from "@/lib/data";
 import type { Occasion, Style } from "@/lib/types";
 import { trackEvent } from "@/lib/analytics";
@@ -69,11 +69,7 @@ export function PreferenceSelector({
 
   const matchedOutfits = useMemo(() => {
     if (!situation || !style) return [];
-    return OUTFITS.filter(
-      (outfit) =>
-        outfit.occasions.includes(situation as Occasion) &&
-        outfit.styles.includes(style as Style)
-    ).slice(0, 2);
+    return matchOutfits(situation as Occasion, style as Style).slice(0, 2);
   }, [situation, style]);
 
   function handleSelectStyle(styleId: string) {
@@ -88,10 +84,9 @@ export function PreferenceSelector({
     timeoutRef.current = setTimeout(() => {
       setPhase("result");
       isTransitioningRef.current = false;
-      const outfitCount = OUTFITS.filter(
-        (outfit) =>
-          outfit.occasions.includes(situation as Occasion) &&
-          outfit.styles.includes(styleId as Style)
+      const outfitCount = matchOutfits(
+        situation as Occasion,
+        styleId as Style
       ).slice(0, 2).length;
       trackRecommendationViewed(situation, styleId, outfitCount, flowId);
     }, RECOMMENDATION_LOADING_MS);
