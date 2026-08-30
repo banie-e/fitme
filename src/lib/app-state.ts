@@ -6,6 +6,22 @@ import type { Preferences } from "@/lib/types";
 const PREFERENCES_KEY = "fitme:preferences";
 const LIKES_KEY = "fitme:likes";
 
+// Outfit ids were renamed to match their image filenames when the weekend
+// category moved from "casual_*" to "weekend_*" ids. Remap any liked ids a
+// user already has saved so their 찜 list doesn't silently lose entries.
+const LEGACY_ID_MIGRATIONS: Record<string, string> = {
+  casual_minimal_1: "weekend_minimal_1",
+  casual_minimal_2: "weekend_minimal_2",
+  casual_casual_1: "weekend_casual_1",
+  casual_casual_2: "weekend_casual_2",
+  casual_feminine_1: "weekend_feminine_1",
+  casual_feminine_2: "weekend_feminine_2",
+};
+
+function migrateLikedIds(ids: string[]): string[] {
+  return Array.from(new Set(ids.map((id) => LEGACY_ID_MIGRATIONS[id] ?? id)));
+}
+
 const DEFAULT_PREFERENCES: Preferences = {
   situations: [],
   styles: [],
@@ -44,7 +60,7 @@ function readFromStorage(): StoreState {
       preferences: rawPreferences
         ? (JSON.parse(rawPreferences) as Preferences)
         : DEFAULT_PREFERENCES,
-      likedIds: rawLikes ? (JSON.parse(rawLikes) as string[]) : [],
+      likedIds: rawLikes ? migrateLikedIds(JSON.parse(rawLikes) as string[]) : [],
     };
   } catch {
     return { ready: true, preferences: DEFAULT_PREFERENCES, likedIds: [] };

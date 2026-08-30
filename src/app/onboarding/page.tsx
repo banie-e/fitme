@@ -21,7 +21,7 @@ export default function OnboardingPage() {
         </p>
       </div>
       <PreferenceSelector
-        submitLabel="코디 저장"
+        submitLabel="완료"
         onSubmit={(situations, styles) => {
           savePreferences(situations, styles);
           router.push("/");

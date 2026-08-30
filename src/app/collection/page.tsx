@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useAppState } from "@/lib/app-state";
 import { trackEvent } from "@/lib/analytics";
-import { OUTFITS, SITUATIONS, STYLES } from "@/lib/data";
+import { OCCASIONS, OUTFITS, STYLES } from "@/lib/data";
 import { TagChip } from "@/components/tag-chip";
 import { OutfitCard } from "@/components/outfit-card";
 import { LoadingState } from "@/components/loading-state";
@@ -27,7 +27,7 @@ export default function CollectionPage() {
     return likedOutfits.filter((outfit) => {
       const situationMatch =
         situations.length === 0 ||
-        outfit.situations.some((id) => situations.includes(id));
+        outfit.occasions.some((id) => situations.includes(id));
       const styleMatch =
         styles.length === 0 || outfit.styles.some((id) => styles.includes(id));
       return situationMatch && styleMatch;
@@ -69,7 +69,7 @@ export default function CollectionPage() {
 
       <div className="flex flex-col gap-3">
         <div className="scrollbar-none flex gap-2 overflow-x-auto">
-          {SITUATIONS.map((situation) => (
+          {OCCASIONS.map((situation) => (
             <TagChip
               key={situation.id}
               label={situation.label}

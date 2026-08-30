@@ -1,15 +1,38 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { OUTFITS, SITUATIONS, STYLES } from "@/lib/data";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  OCCASIONS,
+  OUTFITS,
+  STYLES,
+  getOccasionLabel,
+  getStylePreviewImage,
+  getStyleLabel,
+} from "@/lib/data";
+import type { Occasion, Style } from "@/lib/types";
 import { trackEvent } from "@/lib/analytics";
+import {
+  createRecommendationFlowId,
+  trackOccasionSelected,
+  trackRecommendationLoadingStarted,
+  trackRecommendationViewed,
+  trackRetryClicked,
+  trackStyleSelected,
+  trackStyleSelectorViewed,
+} from "@/lib/recommendation-events";
 import { TagChip } from "./tag-chip";
+import { StyleCard } from "./style-card";
+import { StyleLoadingScreen } from "./style-loading-screen";
 import { OutfitCard } from "./outfit-card";
+
+const RECOMMENDATION_LOADING_MS = 1800;
+
+type Phase = "select" | "loading" | "result";
 
 export function PreferenceSelector({
   initialSituations = [],
   initialStyles = [],
-  submitLabel = "코디 저장",
+  submitLabel = "완료",
   onSubmit,
 }: {
   initialSituations?: string[];
@@ -21,14 +44,132 @@ export function PreferenceSelector({
     initialSituations[0] ?? null
   );
   const [style, setStyle] = useState<string | null>(initialStyles[0] ?? null);
+  const [phase, setPhase] = useState<Phase>(
+    initialSituations[0] && initialStyles[0] ? "result" : "select"
+  );
+  const [recommendationFlowId, setRecommendationFlowId] = useState<string | null>(
+    null
+  );
+  const isTransitioningRef = useRef(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const viewedStyleSelectorForRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (situation && viewedStyleSelectorForRef.current !== situation) {
+      viewedStyleSelectorForRef.current = situation;
+      trackStyleSelectorViewed(situation);
+    }
+  }, [situation]);
 
   const matchedOutfits = useMemo(() => {
     if (!situation || !style) return [];
     return OUTFITS.filter(
       (outfit) =>
-        outfit.situations.includes(situation) && outfit.styles.includes(style)
+        outfit.occasions.includes(situation as Occasion) &&
+        outfit.styles.includes(style as Style)
     ).slice(0, 2);
   }, [situation, style]);
+
+  function handleSelectStyle(styleId: string) {
+    if (!situation || isTransitioningRef.current) return;
+    isTransitioningRef.current = true;
+    const flowId = createRecommendationFlowId();
+    setRecommendationFlowId(flowId);
+    setStyle(styleId);
+    setPhase("loading");
+    trackStyleSelected(situation, styleId, flowId);
+    trackRecommendationLoadingStarted(situation, styleId, flowId);
+    timeoutRef.current = setTimeout(() => {
+      setPhase("result");
+      isTransitioningRef.current = false;
+      const outfitCount = OUTFITS.filter(
+        (outfit) =>
+          outfit.occasions.includes(situation as Occasion) &&
+          outfit.styles.includes(styleId as Style)
+      ).slice(0, 2).length;
+      trackRecommendationViewed(situation, styleId, outfitCount, flowId);
+    }, RECOMMENDATION_LOADING_MS);
+  }
+
+  function handleRestart() {
+    if (situation && style) {
+      trackRetryClicked(situation, style, recommendationFlowId);
+    }
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    isTransitioningRef.current = false;
+    setSituation(null);
+    setStyle(null);
+    setPhase("select");
+    setRecommendationFlowId(null);
+  }
+
+  if (phase === "loading") {
+    return <StyleLoadingScreen />;
+  }
+
+  if (phase === "result" && situation && style) {
+    return (
+      <div className="flex flex-col gap-6 animate-fade-in">
+        <span className="w-fit rounded-full bg-primary-light px-3 py-1 text-xs font-medium text-primary">
+          {getOccasionLabel(situation)} · {getStyleLabel(style)}
+        </span>
+        <div>
+          <h2 className="text-lg font-bold text-foreground">
+            {getOccasionLabel(situation)}에 어울리는 {getStyleLabel(style)}{" "}
+            코디를 골라봤어요.
+          </h2>
+          <p className="mt-1 text-sm text-muted">
+            마음에 드는 코디에 하트를 눌러보세요.
+          </p>
+        </div>
+        {matchedOutfits.length > 0 ? (
+          <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+            {matchedOutfits.map((outfit) => (
+              <OutfitCard
+                key={outfit.id}
+                outfit={outfit}
+                showFeedback
+                recommendationFlowId={recommendationFlowId}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-muted">
+            조건에 맞는 코디를 준비 중이에요.
+          </p>
+        )}
+        <div className="flex flex-col gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              trackEvent("Preference Submit Clicked", {
+                situation,
+                style,
+                label: submitLabel,
+              });
+              onSubmit([situation], [style]);
+            }}
+            className="w-full rounded-full bg-primary py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          >
+            {submitLabel}
+          </button>
+          <button
+            type="button"
+            onClick={handleRestart}
+            className="w-full rounded-full border border-border py-3 text-sm font-semibold text-muted transition-colors hover:border-primary/40 hover:text-primary"
+          >
+            다시 골라보기
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-10">
@@ -40,14 +181,18 @@ export function PreferenceSelector({
           <p className="mt-1 text-sm text-muted">하나를 선택해주세요.</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          {SITUATIONS.map((item) => (
+          {OCCASIONS.map((item) => (
             <TagChip
               key={item.id}
               label={item.label}
               active={situation === item.id}
               onClick={() => {
+                const changed = situation !== item.id;
                 setSituation(item.id);
                 setStyle(null);
+                if (changed) {
+                  trackOccasionSelected(item.id);
+                }
               }}
             />
           ))}
@@ -65,57 +210,17 @@ export function PreferenceSelector({
             </h2>
             <p className="mt-1 text-sm text-muted">하나를 선택해주세요.</p>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-3 gap-3">
             {STYLES.map((item) => (
-              <TagChip
+              <StyleCard
                 key={item.id}
                 label={item.label}
+                image={getStylePreviewImage(situation as Occasion, item.id)}
                 active={style === item.id}
-                onClick={() => setStyle(item.id)}
+                onClick={() => handleSelectStyle(item.id)}
               />
             ))}
           </div>
-        </section>
-      )}
-
-      {situation && style && (
-        <section
-          key={`${situation}-${style}`}
-          className="flex flex-col gap-4 animate-fade-slide-up"
-        >
-          <div>
-            <h2 className="text-base font-semibold text-foreground">
-              이런 코디는 어떠세요?
-            </h2>
-            <p className="mt-1 text-sm text-muted">
-              선택한 상황과 스타일에 맞는 코디예요.
-            </p>
-          </div>
-          {matchedOutfits.length > 0 ? (
-            <div className="grid grid-cols-2 gap-x-4 gap-y-6">
-              {matchedOutfits.map((outfit) => (
-                <OutfitCard key={outfit.id} outfit={outfit} />
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-muted">
-              조건에 맞는 코디를 준비 중이에요.
-            </p>
-          )}
-          <button
-            type="button"
-            onClick={() => {
-              trackEvent("Preference Submit Clicked", {
-                situation,
-                style,
-                label: submitLabel,
-              });
-              onSubmit([situation], [style]);
-            }}
-            className="w-full rounded-full bg-primary py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-          >
-            {submitLabel}
-          </button>
         </section>
       )}
     </div>

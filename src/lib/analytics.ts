@@ -28,5 +28,9 @@ export function trackPageview(url: string) {
 
 export function trackEvent(name: string, props?: Record<string, unknown>) {
   if (!initialized) return;
-  mixpanel.track(name, props);
+  try {
+    mixpanel.track(name, props);
+  } catch (error) {
+    console.warn(`Mixpanel track failed for "${name}"`, error);
+  }
 }

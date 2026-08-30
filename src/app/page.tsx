@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useAppState } from "@/lib/app-state";
 import { trackEvent } from "@/lib/analytics";
-import { OUTFITS, getSituationLabel, getStyleLabel, matchScore } from "@/lib/data";
+import { OUTFITS, getOccasionLabel, getStyleLabel, matchScore } from "@/lib/data";
 import { OutfitCard } from "@/components/outfit-card";
 import { LoadingState } from "@/components/loading-state";
 
@@ -65,7 +65,7 @@ export default function HomePage() {
               key={id}
               className="rounded-full bg-primary-light px-3 py-1 text-xs font-medium text-primary"
             >
-              #{getSituationLabel(id)}
+              #{getOccasionLabel(id)}
             </span>
           ))}
           {preferences.styles.map((id) => (

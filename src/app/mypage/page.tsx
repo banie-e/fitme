@@ -5,7 +5,7 @@ import { useAppState } from "@/lib/app-state";
 import { trackEvent } from "@/lib/analytics";
 import { PreferenceSelector } from "@/components/preference-selector";
 import { LoadingState } from "@/components/loading-state";
-import { getSituationLabel, getStyleLabel } from "@/lib/data";
+import { getOccasionLabel, getStyleLabel } from "@/lib/data";
 
 export default function MyPage() {
   const { ready, preferences, likedIds, savePreferences } = useAppState();
@@ -27,7 +27,7 @@ export default function MyPage() {
         <PreferenceSelector
           initialSituations={preferences.situations}
           initialStyles={preferences.styles}
-          submitLabel="코디 저장"
+          submitLabel="완료"
           onSubmit={(situations, styles) => {
             savePreferences(situations, styles);
             setEditing(false);
@@ -67,7 +67,7 @@ export default function MyPage() {
               key={id}
               className="rounded-full bg-primary-light px-3 py-1.5 text-xs font-medium text-primary"
             >
-              {getSituationLabel(id)}
+              {getOccasionLabel(id)}
             </span>
           ))}
         </div>
