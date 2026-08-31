@@ -24,6 +24,7 @@ import { TagChip } from "./tag-chip";
 import { StyleCard } from "./style-card";
 import { StyleLoadingScreen } from "./style-loading-screen";
 import { OutfitCard } from "./outfit-card";
+import { RecommendationFeedback } from "./recommendation-feedback";
 
 const RECOMMENDATION_LOADING_MS = 1800;
 
@@ -124,16 +125,24 @@ export function PreferenceSelector({
           </p>
         </div>
         {matchedOutfits.length > 0 ? (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-6">
-            {matchedOutfits.map((outfit) => (
-              <OutfitCard
-                key={outfit.id}
-                outfit={outfit}
-                showFeedback
-                recommendationFlowId={recommendationFlowId}
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+              {matchedOutfits.map((outfit) => (
+                <OutfitCard
+                  key={outfit.id}
+                  outfit={outfit}
+                  recommendationFlowId={recommendationFlowId}
+                />
+              ))}
+            </div>
+            <RecommendationFeedback
+              key={recommendationFlowId}
+              occasion={situation}
+              style={style}
+              outfitIds={matchedOutfits.map((outfit) => outfit.id)}
+              recommendationFlowId={recommendationFlowId}
+            />
+          </>
         ) : (
           <p className="text-sm text-muted">
             조건에 맞는 코디를 준비 중이에요.

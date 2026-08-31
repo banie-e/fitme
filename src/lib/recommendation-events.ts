@@ -1,7 +1,7 @@
 import { trackEvent } from "./analytics";
 import type { Outfit } from "./types";
 
-export type OutfitFeedback = "like" | "dislike";
+export type RecommendationFeedback = "like" | "dislike";
 
 export function createRecommendationFlowId(): string {
   return `flow_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
@@ -75,26 +75,33 @@ export function trackOutfitFavoriteToggled(
   );
 }
 
-export function trackOutfitFeedbackSubmitted(
-  outfit: Outfit,
-  feedback: OutfitFeedback,
+export function trackRecommendationFeedbackSubmitted(
+  occasion: string,
+  style: string,
+  feedback: RecommendationFeedback,
+  outfitIds: string[],
   recommendationFlowId?: string | null
 ) {
   trackEvent(
-    "outfit_feedback_submitted",
-    withFlowId({ ...outfitContext(outfit), feedback }, recommendationFlowId)
+    "recommendation_feedback_submitted",
+    withFlowId(
+      { occasion, style, feedback, outfit_ids: outfitIds },
+      recommendationFlowId
+    )
   );
 }
 
-export function trackOutfitFeedbackRemoved(
-  outfit: Outfit,
-  previousFeedback: OutfitFeedback,
+export function trackRecommendationFeedbackRemoved(
+  occasion: string,
+  style: string,
+  previousFeedback: RecommendationFeedback,
+  outfitIds: string[],
   recommendationFlowId?: string | null
 ) {
   trackEvent(
-    "outfit_feedback_removed",
+    "recommendation_feedback_removed",
     withFlowId(
-      { ...outfitContext(outfit), previous_feedback: previousFeedback },
+      { occasion, style, previous_feedback: previousFeedback, outfit_ids: outfitIds },
       recommendationFlowId
     )
   );

@@ -3,15 +3,12 @@ import type { Outfit } from "@/lib/types";
 import { getOccasionLabel, getStyleLabel } from "@/lib/data";
 import { OutfitVisual } from "./outfit-visual";
 import { LikeButton } from "./like-button";
-import { FeedbackButtons } from "./feedback-buttons";
 
 export function OutfitCard({
   outfit,
-  showFeedback = false,
   recommendationFlowId,
 }: {
   outfit: Outfit;
-  showFeedback?: boolean;
   recommendationFlowId?: string | null;
 }) {
   return (
@@ -51,12 +48,6 @@ export function OutfitCard({
             </span>
           ))}
         </div>
-        {showFeedback && (
-          <FeedbackButtons
-            outfit={outfit}
-            recommendationFlowId={recommendationFlowId}
-          />
-        )}
       </div>
     </Link>
   );
